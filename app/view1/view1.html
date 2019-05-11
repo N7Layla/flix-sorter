@@ -1,12 +1,12 @@
 <h1 ng-init="loadList()">My List Sorter</h1>
-<form>
+<form class="flex search-form">
     <input type="text" ng-model="listing" name="listingInput" placeholder="Enter a title">
     <label>TV: </label><input type="checkbox" ng-model="isTV"> 
     <label>Movie: </label><input type="checkbox" ng-model="isFilm">
-    <button type="submit" ng-click="submit()">Submit</button>
+    <div class="btn" type="submit" ng-click="submit()">Submit</div>
 </form>
 
-<div ng-repeat="item in results">
+<div class="results-container" ng-repeat="item in results">
 <div class="results-box" ng-click="addToList(item)">
     <div class="clickable">{{item.name || item.title}}</div>
     <div>{{item.first_air_date.slice(0,4) || item.release_date.slice(0,4)}}</div>
@@ -21,19 +21,73 @@
     <div class="clickable" ng-click="changeFilter('film')">Movies</div>
     <div class="clickable" ng-click="changeFilter('en')">English</div>
     <div class="clickable" ng-click="changeFilter('')">Clear</div>
+    <div class="clickable" ng-click="randomModal = true">Get Random</div>
     <div class="clickable save-btn" ng-click="save()">Save List</div>
 </div>
 
+<div class="modal" ng-show="randomModal">
+    <div class="inner-modal">
+      <div class="flex modal-header">    
+            <p>Pick a Random</p>
+        <div class="close-modal" ng-click="randomModal = false">Close</div>
+    </div>
+    <form>
+        <!-- <input type="checkbox" ng-model="{{randomFilters.category}}" value="tv" />
+        <input type="checkbox" ng-model="{{randomFilters.category}}" value="film" />
+        <input type="checkbox" ng-model="{{randomFilters.language}}" value="en" /> -->
+        <div type="submit" class="modal-btn" ng-click="findRandom()">Get Random</div>
+    </form>
+    <div class="modal-selected">
+    <div>{{randomSelection.name || randomSelection.title}}</div>
+    <div>{{randomSelection.first_air_date.slice(0,4) || randomSelection.release_date.slice(0,4)}}</div>
+    <div>{{randomSelection.origin_country[0] || randomSelection.original_language }} {{randomSelection.category}}</div>
+    </div>
+</div>
+</div>
+
+<div class="modal" ng-show="detailsModal">
+    <div class="inner-modal">
+        <div class="flex modal-header">    
+                <h2>Details</h2>
+            <div class="close-modal" ng-click="detailsModal = false">Close</div>
+        </div>
+        <div class="modal-selected">
+            <h3>{{selected.name || selected.title}}</h3>
+            <div class="flex">
+                <div>{{selected.date.slice(0,4)}}</div>
+                <div ng-show="selected.category === 'tv'"><i class="material-icons">
+                        tv
+                        </i></div>
+                        <div ng-show="selected.category === 'film'"><i class="material-icons">
+                                movie
+                                </i></div>
+                <div>{{selected.origin_country[0] || selected.original_language }}</div>
+            </div>
+            <div>{{selected.overview}}</div>
+        </div>
+    </div>
+</div>
+
+
 <div class="list-container">
-<div ng-repeat="item in myList | filter:filterFn track by $index">
+<div ng-repeat="item in myList | orderBy : '-date'  | filter:filterFn track by $index">
     <div class="list-box">
             <img ng-src="{{ item.poster_path ? item.image : 'https://via.placeholder.com/200x300'}}" alt="{{item.title}}">
         <div class="box-info">
-            <p>{{item.name || item.title}}</p>
-            <p class="clickable" ng-click="removeItem(item)">Remove</p>
+            <div class="info-title">{{item.name || item.title}}</div>
+            <div class="flex spaced">
+            <div class="clickable" ng-click="changeSelected(item)"><i class="material-icons">
+                    list
+                    </i></div>
+            <div class="clickable" ng-click="removeItem(item)"><i class="material-icons">
+                    delete_forever
+                    </i></div>
+                </div>
         </div>
     </div>
 </div>
 </div>
+
+
 
 
