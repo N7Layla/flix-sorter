@@ -1,1 +1,39 @@
-<p>This is the partial for view 1.</p>
+<h1 ng-init="loadList()">My List Sorter</h1>
+<form>
+    <input type="text" ng-model="listing" name="listingInput" placeholder="Enter a title">
+    <label>TV: </label><input type="checkbox" ng-model="isTV"> 
+    <label>Movie: </label><input type="checkbox" ng-model="isFilm">
+    <button type="submit" ng-click="submit()">Submit</button>
+</form>
+
+<div ng-repeat="item in results">
+<div class="results-box" ng-click="addToList(item)">
+    <div class="clickable">{{item.name || item.title}}</div>
+    <div>{{item.first_air_date.slice(0,4) || item.release_date.slice(0,4)}}</div>
+    <div>{{item.origin_country[0] || item.original_language }}</div>
+</div>
+</div>
+
+<hr>
+<h2>Currently: {{myList.length}}</h2>
+<div class="filter-nav">
+    <div class="clickable" ng-click="changeFilter('tv')">TV</div> 
+    <div class="clickable" ng-click="changeFilter('film')">Movies</div>
+    <div class="clickable" ng-click="changeFilter('en')">English</div>
+    <div class="clickable" ng-click="changeFilter('')">Clear</div>
+    <div class="clickable save-btn" ng-click="save()">Save List</div>
+</div>
+
+<div class="list-container">
+<div ng-repeat="item in myList | filter:filterFn track by $index">
+    <div class="list-box">
+            <img ng-src="{{ item.poster_path ? item.image : 'https://via.placeholder.com/200x300'}}" alt="{{item.title}}">
+        <div class="box-info">
+            <p>{{item.name || item.title}}</p>
+            <p class="clickable" ng-click="removeItem(item)">Remove</p>
+        </div>
+    </div>
+</div>
+</div>
+
+

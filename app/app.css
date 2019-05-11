@@ -1,4 +1,17 @@
 /* app css stylesheet */
+body {
+  margin: 1vw;
+  font-family: 'Roboto', serif;
+  background: #a5abc8;
+}
+
+p {
+  display: inline;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
 
 .menu {
   list-style: none;
@@ -22,4 +35,60 @@
 .menu > li + li:before {
   content: "|";
   padding-right: 0.3em;
+}
+
+.results-box {
+  width: 500px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.filter-nav {
+  display: flex;
+}
+
+.filter-nav div {
+  margin: 20px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-box {
+  text-align: center;
+  color: white;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #0f2454;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-box img {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: auto;
+}
+
+
+.box-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+}
+
+.save-btn {
+  background-color: pink;
+  width: 150px;
+  padding: 10px;
+  border-radius: 4px;
 }
